@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    networks:
+      - external_network
+      - internal_network
+    depends_on:
+      - mariadb
+      - redis
+    env_file:
+      - docker.app.env
+      - docker.db.env
+    volumes:
+      - ./storage/logs:/var/www/application/logs
+      - ./storage/backup:/var/www/backup
+      - ./storage/updates:/var/www/updates
+      - ./storage/uploads:/var/www/uploads
+    ports:
+      - 80:80
+  mariadb:
+    restart: unless-stopped
+    image: mariadb
+    networks:
+      - internal_network
+    env_file: docker.db.env
+    volumes:
+      - ./.mariadb:/var/lib/mysql
+  redis:
+    image: redis:5.0-alpine
+    networks:
+      - internal_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    volumes:
+      - ./.redis:/data
+
+networks:
+  external_network:
+  internal_network:
+    internal: true
