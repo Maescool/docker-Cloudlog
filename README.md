@@ -1,4 +1,4 @@
-#Dockerfile for [Cloudlog](http://www.cloudlog.co.uk)
+# Dockerfile for [Cloudlog](http://www.cloudlog.co.uk)
 
 Take note, the docker-compose script is an example script for running this on localhost.
 
