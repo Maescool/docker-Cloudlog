@@ -36,6 +36,7 @@ if [ ! -f ${CONFIGFILE} ]; then
 
         sed -ri "s|\['sess_driver'\] = '([^\']*)+'\;|\['sess_driver'\] = '${SESSION_DRIVER:-files}'\;|g" ${CONFIGFILE}
         sed -ri "s|\['sess_save_path'\] = '([^\']*)+'\;|\['sess_save_path'\] = '${SESSION_SAVE_PATH:-/tmp}'\;|g" ${CONFIGFILE}
+        sed -ri "s|\['sess_expiration'\] = '([^\']*)+'\;|\['sess_expiration'\] = '${SESSION_EXPIRATION:-0}'\;|g" ${CONFIGFILE}
 
         sed -ri "s|\['index_page'\] = 'index.php'\;|\['index_page'\] = ''\;|g" ${CONFIGFILE}
         sed -ri "s|\['proxy_ips'\] = '([^\']*)+'\;|\['proxy_ips'\] = '${PROXY_IPS:-172.16.0.0/12}'\;|g" ${CONFIGFILE}
