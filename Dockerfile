@@ -1,12 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
-ENV PHPVER 7.2
+ENV PHPVER 7.4
 
 # Update and install ubuntu packages
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install software-properties-common locales
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor cron nginx php$PHPVER php$PHPVER-cli php$PHPVER-fpm php$PHPVER-mbstring php$PHPVER-xml php$PHPVER-curl php$PHPVER-gd php$PHPVER-mysql php$PHPVER-redis php$PHPVER-readline mariadb-client wget git unzip curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor cron nginx php$PHPVER php$PHPVER-cli php$PHPVER-fpm php$PHPVER-mbstring php$PHPVER-xml php$PHPVER-curl php$PHPVER-gd php$PHPVER-mysql php-redis php$PHPVER-readline mariadb-client wget git unzip curl
 
 # Prepare nginx
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
@@ -35,8 +35,8 @@ COPY docker/cron-cloudlog /etc/cron.d/cloudlog
 RUN chmod 644 /etc/cron.d/cloudlog
 
 # Add start script
-COPY docker/start.sh /start.sh
-RUN chmod +x /start.sh
+COPY docker/start*.sh /
+RUN chmod +x /start*.sh
 
 # Cleanup packages
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/cache/apt/archives/* /build.sh

@@ -1,11 +1,12 @@
-version: '3'
+version: '3.8'
 
 services:
-  web:
+  app:
     build: .
+    command: /start-app.sh
     restart: unless-stopped
     networks:
-      - external_network
+      - default
       - internal_network
     depends_on:
       - mariadb
@@ -18,18 +19,54 @@ services:
       - ./storage/backup:/var/www/backup
       - ./storage/updates:/var/www/updates
       - ./storage/uploads:/var/www/uploads
+
+  web:
+    build: .
+    command: /start-web.sh
+    restart: unless-stopped
+    networks:
+      - default
+    depends_on:
+      - app
+    env_file:
+      - docker.app.env
+    volumes:
+      - ./storage/logs:/var/www/application/logs
+      - ./storage/backup:/var/www/backup
+      - ./storage/updates:/var/www/updates
+      - ./storage/uploads:/var/www/uploads
     ports:
       - 80:80
+
+  cron:
+    build: .
+    command: /start-cron.sh
+    restart: unless-stopped
+    networks:
+      - default
+      - internal_network
+    depends_on:
+      - mariadb
+      - redis
+    env_file:
+      - docker.app.env
+      - docker.db.env
+    volumes:
+      - ./storage/logs:/var/www/application/logs
+      - ./storage/backup:/var/www/backup
+      - ./storage/updates:/var/www/updates
+      - ./storage/uploads:/var/www/uploads
+
   mariadb:
     restart: unless-stopped
-    image: mariadb
+    image: mariadb:10.4
     networks:
       - internal_network
     env_file: docker.db.env
     volumes:
       - ./.mariadb:/var/lib/mysql
   redis:
-    image: redis:5.0-alpine
+    image: redis:6.2.6-alpine
     networks:
       - internal_network
     healthcheck:
@@ -38,6 +75,6 @@ services:
       - ./.redis:/data
 
 networks:
-  external_network:
+  default:
   internal_network:
     internal: true
