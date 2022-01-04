@@ -26,7 +26,7 @@ if [ ! -f ${CONFIGFILE} ]; then
 
         # Update config
         sed -ri "s|\['base_url'\] = '([^\']*)+'\;|\['base_url'\] = '${WEB_BASE_URL:-http://localhost/}'\;|g" ${CONFIGFILE}
-        sed -ri "s|\['directory'\] = '([^\']*)+'\;|\['directory'\] = '${WEB_DIRECOTRY}'\;|g" ${CONFIGFILE}
+        sed -ri "s|\['directory'\] = '([^\']*)+'\;|\['directory'\] = '${WEB_DIRECTORY}'\;|g" ${CONFIGFILE}
 
         sed -ri "s/\['callbook'\] = '([^\']*)+'\;/\['callbook'\] = '${CALLBOOK:-hamqth}'\;/g" ${CONFIGFILE}
         sed -ri "s/\['hamqth_username'\] = '([^\']*)+'\;/\['hamqth_username'\] = '${HAMQTH_USERNAME//\//\\/}'\;/g" ${CONFIGFILE}
