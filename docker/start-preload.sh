@@ -60,6 +60,7 @@ if [ ! -f ${DBCONFIGFILE} ]; then
         sed -ri "s/'username' => '([^\']*)+',/'username' => '${MYSQL_USER}',/g" ${DBCONFIGFILE}
         sed -ri "s/'password' => '([^\']*)+',/'password' => '${MYSQL_PASSWORD//\//\\/}',/g" ${DBCONFIGFILE}
         sed -ri "s/'database' => '([^\']*)+',/'database' => '${MYSQL_DATABASE}',/g" ${DBCONFIGFILE}
+        sed -ri "s/utf8mb4_0900_ai_ci/utf8mb4_general_ci/g" ${DBCONFIGFILE}
         echo "DB Config file has been created."
         chown www-data: ${DBCONFIGFILE}
 
