@@ -59,7 +59,7 @@ services:
 
   mariadb:
     restart: unless-stopped
-    image: mariadb:10.4
+    image: mariadb:10.10
     networks:
       - internal_network
     env_file: docker.db.env
