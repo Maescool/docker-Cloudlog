@@ -10,7 +10,6 @@ services:
       - internal_network
     depends_on:
       - mariadb
-      - redis
     env_file:
       - docker.app.env
       - docker.db.env
@@ -47,7 +46,6 @@ services:
       - internal_network
     depends_on:
       - mariadb
-      - redis
     env_file:
       - docker.app.env
       - docker.db.env
@@ -65,14 +63,6 @@ services:
     env_file: docker.db.env
     volumes:
       - ./.mariadb:/var/lib/mysql
-  redis:
-    image: redis:6.2.6-alpine
-    networks:
-      - internal_network
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-    volumes:
-      - ./.redis:/data
 
 networks:
   default:
