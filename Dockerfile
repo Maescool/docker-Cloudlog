@@ -1,6 +1,6 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-ENV PHPVER 7.4
+ENV PHPVER 8.1
 
 # Update and install ubuntu packages
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade && \
