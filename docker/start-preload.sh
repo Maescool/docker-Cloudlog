@@ -28,11 +28,11 @@ if [ ! -f ${CONFIGFILE} ]; then
         sed -ri "s|\['base_url'\] = '([^\']*)+'\;|\['base_url'\] = '${WEB_BASE_URL:-http://localhost/}'\;|g" ${CONFIGFILE}
         sed -ri "s|\['directory'\] = '([^\']*)+'\;|\['directory'\] = '${WEB_DIRECTORY}'\;|g" ${CONFIGFILE}
 
-        sed -ri "s/\['callbook'\] = '([^\']*)+'\;/\['callbook'\] = '${CALLBOOK:-hamqth}'\;/g" ${CONFIGFILE}
-        sed -ri "s/\['hamqth_username'\] = '([^\']*)+'\;/\['hamqth_username'\] = '${HAMQTH_USERNAME//\//\\/}'\;/g" ${CONFIGFILE}
-        sed -ri "s/\['hamqth_password'\] = '([^\']*)+'\;/\['hamqth_password'\] = '${HAMQTH_PASWORD//\//\\/}'\;/g" ${CONFIGFILE}
-        sed -ri "s/\['qrz_username'\] = '([^\']*)+'\;/\['qrz_username'\] = '${QRZ_USERNAME//\//\\/}'\;/g" ${CONFIGFILE}
-        sed -ri "s/\['qrz_password'\] = '([^\']*)+'\;/\['qrz_password'\] = '${QRZ_PASWORD//\//\\/}'\;/g" ${CONFIGFILE}
+        sed -ri "/\['callbook'\] =/ s/= .*/= \"${CALLBOOK}\"\;/" ${CONFIGFILE}
+        sed -ri "/\['hamqth_username'\] =/ s/= .*/= \"${HAMQTH_USERNAME}\"\;/" ${CONFIGFILE}
+        sed -ri "/\['hamqth_password'\] =/ s/= .*/= \"${HAMQTH_PASSWORD}\"\;/" ${CONFIGFILE}
+        sed -ri "/\['qrz_username'\] =/ s/= .*/= \"${QRZ_USERNAME}\"\;/" ${CONFIGFILE}
+        sed -ri "/\['qrz_password'\] =/ s/= .*/= \"${QRZ_PASSWORD}\"\;/" ${CONFIGFILE}
 
         sed -ri "s|\['sess_driver'\] = '([^\']*)+'\;|\['sess_driver'\] = '${SESSION_DRIVER:-files}'\;|g" ${CONFIGFILE}
         sed -ri "s|\['sess_save_path'\] = '([^\']*)+'\;|\['sess_save_path'\] = '${SESSION_SAVE_PATH:-/tmp}'\;|g" ${CONFIGFILE}
