@@ -1,3 +1,3 @@
-@weekly curl --silent http://localhost/index.php/lotw/load_users &>/dev/null
-@weekly curl --silent http://localhost/index.php/update/dxcc &>/dev/null
-@weekly curl --silent http://localhost/index.php/update/update_clublog_scp &>/dev/null
+@weekly curl --silent http://web/index.php/lotw/load_users &>/dev/null
+@weekly curl --silent http://web/index.php/update/dxcc &>/dev/null
+@weekly curl --silent http://web/index.php/update/update_clublog_scp &>/dev/null
